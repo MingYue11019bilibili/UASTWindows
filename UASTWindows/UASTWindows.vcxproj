@@ -142,8 +142,8 @@
       <EnableSegmentHeap>true</EnableSegmentHeap>
     </Manifest>
     <PostBuildEvent>
-      <Command>cd /d D:\Certs
-signtool sign /f qm.pfx /p mmymy11019 /fd sha256 /t http://timestamp.digicert.com "F:\Users\36520\source\repos\UASTWindows\x64\Release\UASTWindows.exe"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
