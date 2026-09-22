@@ -1,0 +1,25 @@
+# VS 输出
+.vs/
+x64/
+Debug/
+Release/
+*.user
+*.suo
+
+# 编译产物
+*.exe
+*.dll
+*.pdb
+*.ilk
+*.obj
+
+# 证书与密钥 (绝不能提交)
+*.pfx
+*.pvk
+*.cer
+*.snk
+
+# 本地脚本
+sign.bat
+sign_only.bat
+build_and_sign.bat

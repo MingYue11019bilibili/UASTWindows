@@ -1,0 +1,8 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="UASTCmdup/UASTCmdup.vcxproj" Id="c61158dc-5f8a-451f-8deb-ec328b395352" />
+  <Project Path="UASTWindows/UASTWindows.vcxproj" Id="bbc1bb80-0a64-4caa-b23c-1d0715127e59" />
+</Solution>
