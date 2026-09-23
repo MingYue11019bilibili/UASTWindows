@@ -4,6 +4,8 @@
 
 **作者**: [明明月明月11019](https://space.bilibili.com/3707056078982013)（哔哩哔哩）
 
+**注意：**使用本工具需要一定的计算机技术，本程序默认您已有一定的计算机基础，且您知道您在干什么。
+
 ---
 
 ## 功能特性
@@ -19,7 +21,7 @@
 | 自定义工作目录 | 指定子进程的起始目录 |
 | 等待模式 | 等待子进程结束后再退出 |
 | 防重复提权 | 降级前检测已有管理员实例，避免产生多个进程 |
-| 命令行接口 | 兼容 NSudoL 风格的参数格式 |
+| 命令行接口 | 参考 NSudoL 的参数格式 |
 | 独立引擎 | GUI 与引擎分离，引擎可被脚本直接调用 |
 
 ---
@@ -28,7 +30,7 @@
 
 ```
 UASTWindows/
-├── UASTWindows.sln          解决方案文件
+├── UASTWindows.slnx          解决方案文件
 ├── LICENSE                  MIT + 署名条款
 ├── README.md                本文件
 ├── .gitignore               Git 忽略规则
@@ -59,6 +61,11 @@ UASTWindows/
 | Windows SDK | 10.0 或更高 |
 | 平台 | x64（推荐） |
 
+### 注意
+
+如果直接下载本仓库的源码，项目的编译配置已预设完成，
+打开 `.slnx` 后可直接按 F7 生成解决方案，无需手动调整。
+
 ### UASTCmdup（控制台引擎）
 
 右键项目 → 属性 → 配置为 **Release | x64**：
@@ -87,12 +94,10 @@ UASTWindows/
 
 ### 编译步骤
 
-1. 用 Visual Studio 打开 `UASTWindows.sln`
+1. 用 Visual Studio 打开 `UASTWindows.slnx`
 2. 顶部工具栏：配置选 **Release**，平台选 **x64**
 3. 菜单 **生成 → 生成解决方案**（或按 F7）
-4. 两个 exe 会输出到各自的 `x64\Release\` 目录
-5. 手动把 `UASTCmdup.exe` 复制到 `UASTWindows.exe` 所在目录（或配置输出目录为同一路径）
-
+4. 无特殊配置时，两个 exe 会输出到解决方案目录的 `x64\Release\` 下
 ---
 
 ## 使用
@@ -228,16 +233,15 @@ HKCU\Software\Classes\ms-settings\Shell\Open\command
 - 创建计划任务
 - 留下任何持久化痕迹
 
-### Q6: 与 NSudo 有什么区别？
+### Q6: 与其他提权工具有什么区别（如 NSudo）？
 
-| 维度 | NSudo | UASTWindows |
+| 维度 | 其他提权工具 | UASTWindows |
 |------|-------|-------------|
 | UAC 弹窗 | 每次都弹 | 不弹 |
-| SAC/杀软 | 放行 | 拦截（可手动确认后放行） |
+| SAC/杀软 | 放行 | 拦截（可手动确认后放行，具体见常见问题的Q2部分） |
 | 界面 | 命令行 | 命令行 + 图形界面 |
-| 参数格式 | NSudoL 风格 | 兼容 NSudoL 风格 |
 
-NSudo 弹 UAC = 用户明确授权 = 安全机制放行。
+其他提权工具 弹 UAC = 用户明确授权 = 安全机制放行。
 
 UASTWindows 不弹 UAC = 绕过用户确认 = 安全机制拦截。
 
@@ -248,18 +252,11 @@ UASTWindows 不弹 UAC = 绕过用户确认 = 安全机制拦截。
 默认情况下，两个项目的输出目录是：
 
 ```
-UASTCmdup\x64\Release\UASTCmdup.exe
 UASTWindows\x64\Release\UASTWindows.exe
+UASTWindows\x64\Release\UASTCmdup.exe
 ```
 
-你需要手动把 `UASTCmdup.exe` 复制到 `UASTWindows.exe` 所在目录。
-
-或者修改项目属性，让两者输出到同一目录：
-
-- 项目属性 → 常规 → 输出目录
-- 改为：`$(SolutionDir)bin\$(Platform)\$(Configuration)\`
-
-两个项目都改，这样都会输出到 `bin\x64\Release\`。
+若您更改了配置，您需要手动把 `UASTCmdup.exe` 复制到 `UASTWindows.exe` 所在目录。
 
 ---
 
@@ -311,6 +308,7 @@ UASTWindows\x64\Release\UASTWindows.exe
 - 提权技术思路基于安全社区多年公开的研究（fodhelper 绕过、令牌复制等），API 调用遵循微软官方文档。
 - 参考了作者自己之前开发的控制台项目 bd_all。
 - 感谢 [UACME](https://github.com/hfiref0x/UACME) 项目所整理的公开技术资料。
+- 感谢 [NSudo](https://nsudo.m2team.org) 为本程序提供命令行语法灵感。
 
 不同开发者基于相同公开技术独立实现相似功能，属于正常现象。
 
@@ -320,6 +318,7 @@ UASTWindows\x64\Release\UASTWindows.exe
 
 本工具仅供合法的系统管理与安全研究使用。
 
+- 使用本工具需要一定的计算机技术，本程序默认您已有一定的计算机基础，且您知道您在干什么。
 - 使用者需自行承担使用本工具产生的一切后果
 - 禁止用于未授权的系统访问
 - 禁止用于恶意软件的开发与传播
@@ -335,7 +334,7 @@ UASTWindows\x64\Release\UASTWindows.exe
 
 你可以自由使用、修改、分发本软件，包括商业用途。唯一的额外要求是：
 
-在分发时须注明本项目基于 明明月明月11019（哔哩哔哩）的 UASTWindows 开发。
+在分发时须注明本项目基于 [明明月明月11019](https://space.bilibili.com/3707056078982013)（哔哩哔哩）的 UASTWindows 开发。
 
 详见 [LICENSE](LICENSE) 文件。
 
@@ -347,7 +346,7 @@ UASTWindows\x64\Release\UASTWindows.exe
 - 问题反馈请附上：
   - Windows 版本（`winver` 命令查看）
   - 复现步骤
-  - 控制台日志（如果可能）
+  - 控制台日志（如果存在）
 
 ---
 
@@ -364,3 +363,7 @@ UASTWindows\x64\Release\UASTWindows.exe
 - 命令行 + 图形界面双模式
 - 命名事件新进程同步
 - 防重复提权机制
+
+### v1.0.1
+
+- 修复：移除项目配置中残余的签名命令，解决部分用户无法编译的问题
