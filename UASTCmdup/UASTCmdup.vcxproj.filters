@@ -18,5 +18,11 @@
     <ClCompile Include="TCU.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\Common\json.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\translation.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

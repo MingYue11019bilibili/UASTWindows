@@ -23,6 +23,7 @@
 | 防重复提权 | 降级前检测已有管理员实例，避免产生多个进程 |
 | 命令行接口 | 参考 NSudoL 的参数格式 |
 | 独立引擎 | GUI 与引擎分离，引擎可被脚本直接调用 |
+| 多语言支持 | 通过 language.json 切换界面和日志语言 |
 
 ---
 
@@ -34,6 +35,11 @@ UASTWindows/
 ├── LICENSE                  MIT + 署名条款
 ├── README.md                本文件
 ├── .gitignore               Git 忽略规则
+├── Common/
+│   ├── json.h                   JSON 解析器接口
+│   ├── json.c                   JSON 解析器实现
+│   ├── translation.h            多语言模块接口
+│   └── translation.c            多语言模块实现
 ├── UASTCmdup/               提权引擎（控制台）
 │   ├── UASTCmdup.vcxproj
 │   ├── UASTCmdup.vcxproj.filters
@@ -64,7 +70,7 @@ UASTWindows/
 ### 注意
 
 如果直接下载本仓库的源码，项目的编译配置已预设完成，
-打开 `.slnx` 后可直接按 F7 生成解决方案，无需手动调整。
+打开 `.slnx` 后点击上方菜单栏的`Debug`下拉框，将其改为`Release`即可直接按 F7 生成解决方案。
 
 ### UASTCmdup（控制台引擎）
 
@@ -98,6 +104,14 @@ UASTWindows/
 2. 顶部工具栏：配置选 **Release**，平台选 **x64**
 3. 菜单 **生成 → 生成解决方案**（或按 F7）
 4. 无特殊配置时，两个 exe 会输出到解决方案目录的 `x64\Release\` 下
+
+### 添加公共模块
+
+两个项目都需要引用 `Common/` 下的文件：
+
+1. 右键项目 → **添加 → 现有项** → 选 `Common/json.c` 和 `Common/translation.c`
+2. 项目属性 → **C/C++ → 常规 → 附加包含目录** → 填 `$(SolutionDir)Common`
+
 ---
 
 ## 使用
@@ -202,6 +216,8 @@ Windows 11 的智能应用控制（Smart App Control）会拦截未签名且不�
 4. 在虚拟机中运行。
 
 5. 如果对话框中没有"运行"或"仍要运行"选项，可尝试用管理员权限运行几次，让 Windows 记住该程序并建立本地信誉。
+
+6. 如果上述方法均不行，可尝试为 exe 制作自签名证书。步骤参考 [sign.txt](sign.txt)。**注意**：虽已证明自签名证书对智能应用控制**无效**，仅对部分杀软误报有缓解作用，不过作者测试也有一定的局限性，仅供参考。
 
 ### Q3: 为什么会有多次提权？
 
@@ -367,3 +383,22 @@ UASTWindows\x64\Release\UASTCmdup.exe
 ### v1.0.1
 
 - 修复：移除项目配置中残余的签名命令，解决部分用户无法编译的问题
+
+### v1.1.0
+
+- 优化了 [README文件](README.md) 的表述
+
+### v2.0.0
+
+- 添加了 [README文件](README.md) 的关于语言选项的表述
+- 新增多语言支持，通过 `language.json` 切换界面和日志语言
+- 新增 `-language` 命令行参数
+- 新增 GUI 语言下拉框
+- 首次运行自动生成 `language.json`（含中英双语）
+
+**当前支持语言**：
+
+| 语言 | 代号 |
+|------|------|
+| 简体中文 | `zh_cn` |
+| English | `en_us` |

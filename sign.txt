@@ -1,0 +1,5 @@
+mkdir D:\Certs
+cd /d D:\Certs
+makecert -r -pe -n "CN=YourName" -ss My -sky signature -sv <CertName>.pvk <CertName>.cer
+pvk2pfx -pvk <CertName>.pvk -pi <YourPassword> -spc <CertName>.cer -pfx <CertName>.pfx -po <YourPassword>
+signtool sign /f <CertName>.pfx /p <YourPassword> /fd sha256 /t http://timestamp.digicert.com "<YourDir><programName>"
